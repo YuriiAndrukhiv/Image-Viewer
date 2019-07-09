@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QString>
+#include <QDir>
 
 ImageViewer::ImageViewer(QWidget *parent) : QWidget(parent)
 {
@@ -34,17 +35,26 @@ ImageViewer::ImageViewer(QWidget *parent) : QWidget(parent)
 
 void ImageViewer::downloadImage()
 {
-    QString path;
     QPixmap lImage;
-
-    path= mPathImage -> text();
-
+    auto path = mPathImage -> text();
+    if(path.isEmpty())
+    {
+       mViewImage -> setText("Empty path!");
+       return;
+    }
+    QDir dir(path);
+    if(!dir.exists(path))
+    {
+        mViewImage -> setText("Image do not exist!");
+        return;
+    }
     if (lImage.load(path))
     {
         mViewImage -> setPixmap(lImage);
+        return;
     }
     else
     {
-        mViewImage -> setText("Can't open image");
+        mViewImage -> setText("Can't open image!");
     }
 }

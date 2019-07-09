@@ -11,8 +11,6 @@ class ImageViewer : public QWidget
 public:
     explicit ImageViewer(QWidget *parent = nullptr);
 
-signals:
-
 private:
     QLabel *mViewImage;
     QLineEdit *mPathImage;
